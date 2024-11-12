@@ -1,40 +1,77 @@
 import React, { useState, useEffect } from 'react';
 
 export default function App({ ctx, payload }) {
-  const [source, setSource] = useState(payload.source);
+  const [state, setState] = useState(payload.state);
+  const [route, setRoute] = useState(payload.route);
 
   useEffect(() => {
-    // Handle updates from Elixir side
-    ctx.handleEvent("update", ({ source }) => {
-      setSource(source);
+    ctx.handleEvent("update", ({ state, route }) => {
+      setState(state);
+      setRoute(route);
     });
   }, []);
 
   const handleChange = (event) => {
-    const newSource = event.target.value;
+    const newState = event.target.value;
     console.log("I AM CHANGING AND REACTING")
-    setSource(newSource);
-    ctx.pushEvent("update", { source: newSource });
+    setState(newState);
+    ctx.pushEvent("update", { state: newState });
   };
 
+  const handleRouteChange = (newRoute) => {
+    setRoute(newRoute);
+    ctx.pushEvent("update", { route: newRoute });
+  };
+
+  const renderRoute = (route) => {
+    switch(route) {
+      case 'new':
+        return (
+          <div>
+            We are in the new slide route
+            <button
+              onClick={() => handleRouteChange('edit')}
+              className="mt-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
+            >
+              Go to Edit
+            </button>
+          </div>
+        )
+      case 'edit':
+        return (
+          <div>
+            We are in the slide edit
+            <button
+              onClick={() => handleRouteChange('new')}
+              className="mt-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
+            >
+              Back to New
+            </button>
+          </div>
+        )
+      default:
+        return
+    }
+  }
   return (
     <div>
       <label 
-        htmlFor="source" 
+        htmlFor="state" 
         className="block text-sm font-medium leading-6 text-gray-900"
       >
         Add Your Source Here
       </label>
       <div className="mt-2">
         <textarea
-          id="source"
+          id="state"
           rows="4"
-          name="source"
-          value={source}
+          name="state"
+          value={state}
           onChange={handleChange}
           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
         />
       </div>
+      {renderRoute(route)}
     </div>
   );
 }

@@ -12,8 +12,9 @@ defmodule KinoSlides do
     # This function runs once when the smart cell is loaded. If there are attrs
     # that were persisted in the Livebook they will be present here, otherwise it will start
     # with defaults you provide
-    source = attrs["source"] || ""
-    {:ok, assign(ctx, source: source)}
+    state = attrs["state"] || ""
+    route = attrs["route"] || "new"
+    {:ok, assign(ctx, state: state, route: route)}
   end
 
   @impl true
@@ -33,7 +34,7 @@ defmodule KinoSlides do
     # }
 
     # or pass a blank payload, or anything in between
-    {:ok, %{source: ctx.assigns.source}, ctx}
+    {:ok, %{state: ctx.assigns.state, route: ctx.assigns.route}, ctx}
   end
 
   @impl true
@@ -44,7 +45,7 @@ defmodule KinoSlides do
 
     # Livebook persists these by doing a base64 and JSON encoding which will be written
     # as a comment in the .livemd file
-    %{"source" => ctx.assigns.source}
+    %{"state" => ctx.assigns.state, "route" => ctx.assigns.route}
   end
 
   @impl true
@@ -60,13 +61,20 @@ defmodule KinoSlides do
     # |> Kino.SmartCell.quoted_to_string()
 
     # Since we're working with an attr that is directly source code as a string we can just pass it through here
-    attrs["source"]
+    # TODO: have it output all metadata
+    attrs["state"]
   end
 
   @impl true
-  def handle_event("update", %{"source" => source}, ctx) do
+  def handle_event("update", %{"state" => state}, ctx) do
     # Make as many event handlers as needed for the events you define
-    broadcast_event(ctx, "update", %{"source" => source})
-    {:noreply, assign(ctx, source: source)}
+    broadcast_event(ctx, "update", %{"state" => state})
+    {:noreply, assign(ctx, state: state)}
+  end
+
+  @impl true
+  def handle_event("update", %{"route" => route}, ctx) do
+    broadcast_event(ctx, "update", %{"route" => route})
+    {:noreply, assign(ctx, route: route)}
   end
 end
