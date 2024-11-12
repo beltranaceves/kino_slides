@@ -1,9 +1,9 @@
-defmodule KinoSmartcellTemplate.MixProject do
+defmodule KinoSlides.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :kino_smartcell_template,
+      app: :kino_slides,
       version: "0.1.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
@@ -15,7 +15,7 @@ defmodule KinoSmartcellTemplate.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {KinoSmartcellTemplate.Application, []}
+      mod: {KinoSlides.Application, []}
     ]
   end
 

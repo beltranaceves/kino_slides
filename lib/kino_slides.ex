@@ -1,4 +1,4 @@
-defmodule KinoSmartcellTemplate do
+defmodule KinoSlides do
   @moduledoc false
 
   # Your assets_path should be the same as you define in assets/vite.config.js
