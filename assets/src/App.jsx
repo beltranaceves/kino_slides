@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import SlidesEditor from './components/slide_editor/SlidesEditor';
 
 export default function App({ ctx, payload }) {
   const [state, setState] = useState(payload.state);
@@ -40,7 +41,9 @@ export default function App({ ctx, payload }) {
       case 'edit':
         return (
           <div>
-            We are in the slide edit
+            <div style={{ width: '800px', height: '600px' }}>
+              <SlidesEditor />
+            </div>
             <button
               onClick={() => handleRouteChange('new')}
               className="mt-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
@@ -50,7 +53,9 @@ export default function App({ ctx, payload }) {
           </div>
         )
       default:
-        return
+        return <div>
+          route value is: {route}
+        </div>
     }
   }
   return (
