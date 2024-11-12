@@ -8,7 +8,7 @@ export default defineConfig({
     outDir: "../lib/build",
     rollupOptions: {
       preserveEntrySignatures: "exports-only",
-      input: "./src/main.jsx",
+      input: "./src/main.tsx",
       output: {
         dir: "./build",
         entryFileNames: "main.js",
@@ -16,4 +16,8 @@ export default defineConfig({
       },
     },
   },
+  // Add TypeScript configuration
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
+  }
 });
