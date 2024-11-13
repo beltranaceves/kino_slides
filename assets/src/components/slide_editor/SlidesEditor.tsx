@@ -19,6 +19,7 @@ import { SlidesPanel } from './SlidesPanel'
 import './slides.css'
 import { $currentSlide, getSlides, moveToSlide } from './useSlides'
 
+import { useState } from 'react'
 const components: TLComponents = {
 	HelperButtons: SlidesPanel,
 	Minimap: null,
@@ -92,16 +93,36 @@ const overrides: TLUiOverrides = {
 	},
 }
 
+
 const SlidesEditor = track(() => {
+	const [isFullscreen, setIsFullscreen] = useState(false)
+
+	const toggleFullscreen = () => {
+		if (!isFullscreen) {
+			document.documentElement.requestFullscreen()
+		} else {
+			document.exitFullscreen()
+		}
+		setIsFullscreen(!isFullscreen)
+	}
+
 	return (
-		<div className="tldraw__editor">
-			<Tldraw
-				persistenceKey="slideshow_example"
-				shapeUtils={[SlideShapeUtil]}
-				tools={[SlideShapeTool]}
-				components={components}
-				overrides={overrides}
-			/>
+		<div className="tldraw__editor-container">
+			<button 
+				onClick={toggleFullscreen}
+				className="fullscreen-btn"
+			>
+				{isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+			</button>
+			<div className="tldraw__editor">
+				<Tldraw
+					persistenceKey="slideshow_example"
+					shapeUtils={[SlideShapeUtil]}
+					tools={[SlideShapeTool]}
+					components={components}
+					overrides={overrides}
+				/>
+			</div>
 		</div>
 	)
 })
