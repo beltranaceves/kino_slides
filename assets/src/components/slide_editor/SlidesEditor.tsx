@@ -18,8 +18,12 @@ import { SlideShapeUtil } from './SlideShapeUtil'
 import { SlidesPanel } from './SlidesPanel'
 import './slides.css'
 import { $currentSlide, getSlides, moveToSlide } from './useSlides'
-
+import { embedDefinitions } from './EmbedConfig';
 import { useState } from 'react'
+import { CardShapeUtil } from './IFrameEmbed/CardShapeUtil'
+import { CardShapeTool } from './IFrameEmbed/CardShapeTool'
+
+
 const components: TLComponents = {
 	HelperButtons: SlidesPanel,
 	Minimap: null,
@@ -106,6 +110,8 @@ const SlidesEditor = track(() => {
 		setIsFullscreen(!isFullscreen)
 	}
 
+	const customShapeUtils = [CardShapeUtil, SlideShapeUtil]
+	const customTools = [CardShapeTool, SlideShapeTool]
 	return (
 		<div className="tldraw__editor-container">
 			<button 
@@ -117,10 +123,11 @@ const SlidesEditor = track(() => {
 			<div className="tldraw__editor">
 				<Tldraw
 					persistenceKey="slideshow_example"
-					shapeUtils={[SlideShapeUtil]}
-					tools={[SlideShapeTool]}
+					shapeUtils={customShapeUtils}
+					tools={customTools}
 					components={components}
 					overrides={overrides}
+					embeds={embedDefinitions}
 				/>
 			</div>
 		</div>

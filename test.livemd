@@ -1,0 +1,7 @@
+# Untitled notebook
+
+```elixir
+Mix.install([
+  {:kino_slides, "C:/software/kino_slides"}
+])
+```
