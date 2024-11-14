@@ -30,9 +30,11 @@ const components: TLComponents = {
 	Toolbar: (props) => {
 		const tools = useTools()
 		const isSlideSelected = useIsToolSelected(tools['slide'])
+		const isCardSelected = useIsToolSelected(tools['card'])
 		return (
 			<DefaultToolbar {...props}>
 				<TldrawUiMenuItem {...tools['slide']} isSelected={isSlideSelected} />
+				<TldrawUiMenuItem {...tools['card']} isSelected={isCardSelected} />
 				<DefaultToolbarContent />
 			</DefaultToolbar>
 		)
@@ -42,6 +44,7 @@ const components: TLComponents = {
 		return (
 			<DefaultKeyboardShortcutsDialog {...props}>
 				<TldrawUiMenuItem {...tools['slide']} />
+				<TldrawUiMenuItem {...tools['card']} />
 				<DefaultKeyboardShortcutsDialogContent />
 			</DefaultKeyboardShortcutsDialog>
 		)
@@ -92,6 +95,13 @@ const overrides: TLUiOverrides = {
 			label: 'Slide',
 			kbd: 's',
 			onSelect: () => editor.setCurrentTool('slide'),
+		}
+		tools.card = {
+			id: 'card',
+			icon: 'your-icon',
+			label: 'Card',
+			kbd: 'c',
+			onSelect: () => editor.setCurrentTool('card'),
 		}
 		return tools
 	},
