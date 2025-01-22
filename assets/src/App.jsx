@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Edit from './routes/edit';
 import New from './routes/new';
+import Sample from './routes/sample';
 export default function App({ ctx, payload }) {
   const [state, setState] = useState(payload.state);
   const [route, setRoute] = useState(payload.route);
@@ -30,6 +31,8 @@ export default function App({ ctx, payload }) {
         return <Edit handleRouteChange={handleRouteChange} />
       case 'new':
         return <New handleRouteChange={handleRouteChange} />
+      case 'sample':
+        return <Sample handleRouteChange={handleRouteChange} />
       default:
         return (<div>
           route value is: {route}
