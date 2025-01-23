@@ -1,0 +1,15 @@
+# Untitled notebook
+
+```elixir
+Mix.install([
+  {:kino_slides, path: "C:/software/kino_slides", force: true}
+])
+```
+
+## Section
+
+<!-- livebook:{"attrs":"e30","chunks":null,"kind":"Elixir.KinoSlides","livebook_object":"smart_cell"} -->
+
+```elixir
+
+```

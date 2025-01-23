@@ -30,11 +30,11 @@ const components: TLComponents = {
 	Toolbar: (props) => {
 		const tools = useTools()
 		const isSlideSelected = useIsToolSelected(tools['slide'])
-		const isCardSelected = useIsToolSelected(tools['card'])
+		const isCardSelected = useIsToolSelected(tools['CellEmbed'])
 		return (
 			<DefaultToolbar {...props}>
 				<TldrawUiMenuItem {...tools['slide']} isSelected={isSlideSelected} />
-				<TldrawUiMenuItem {...tools['card']} isSelected={isCardSelected} />
+				<TldrawUiMenuItem {...tools['CellEmbed']} isSelected={isCardSelected} />
 				<DefaultToolbarContent />
 			</DefaultToolbar>
 		)
@@ -44,7 +44,7 @@ const components: TLComponents = {
 		return (
 			<DefaultKeyboardShortcutsDialog {...props}>
 				<TldrawUiMenuItem {...tools['slide']} />
-				<TldrawUiMenuItem {...tools['card']} />
+				<TldrawUiMenuItem {...tools['CellEmbed']} />
 				<DefaultKeyboardShortcutsDialogContent />
 			</DefaultKeyboardShortcutsDialog>
 		)
@@ -96,12 +96,12 @@ const overrides: TLUiOverrides = {
 			kbd: 's',
 			onSelect: () => editor.setCurrentTool('slide'),
 		}
-		tools.card = {
-			id: 'card',
+		tools.CellEmbed = {
+			id: 'CellEmbed',
 			icon: 'your-icon',
 			label: 'Card',
 			kbd: 'c',
-			onSelect: () => editor.setCurrentTool('card'),
+			onSelect: () => editor.setCurrentTool('CellEmbed'),
 		}
 		return tools
 	},
@@ -132,7 +132,7 @@ const SlidesEditor = track(() => {
 			</button>
 			<div className="tldraw__editor">
 				<Tldraw
-					persistenceKey="slideshow_example"
+					// persistenceKey="slideshow_example"
 					shapeUtils={customShapeUtils}
 					tools={customTools}
 					components={components}

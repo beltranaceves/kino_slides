@@ -15,13 +15,13 @@ import {
 export const uiOverrides: TLUiOverrides = {
 	tools(editor, tools) {
 		// Create a tool item in the ui's context.
-		tools.card = {
-			id: 'card',
+		tools.CellEmbed = {
+			id: 'CellEmbed',
 			icon: 'color',
-			label: 'Card',
+			label: 'CellEmbed',
 			kbd: 'c',
 			onSelect: () => {
-				editor.setCurrentTool('card')
+				editor.setCurrentTool('CellEmbed')
 			},
 		}
 		return tools
@@ -31,10 +31,10 @@ export const uiOverrides: TLUiOverrides = {
 export const components: TLComponents = {
 	Toolbar: (props) => {
 		const tools = useTools()
-		const isCardSelected = useIsToolSelected(tools['card'])
+		const isCardSelected = useIsToolSelected(tools['CellEmbed'])
 		return (
 			<DefaultToolbar {...props}>
-				<TldrawUiMenuItem {...tools['card']} isSelected={isCardSelected} />
+				<TldrawUiMenuItem {...tools['CellEmbed']} isSelected={isCardSelected} />
 				<DefaultToolbarContent />
 			</DefaultToolbar>
 		)
@@ -43,7 +43,7 @@ export const components: TLComponents = {
 		const tools = useTools()
 		return (
 			<DefaultKeyboardShortcutsDialog {...props}>
-				<TldrawUiMenuItem {...tools['card']} />
+				<TldrawUiMenuItem {...tools['CellEmbed']} />
 				<DefaultKeyboardShortcutsDialogContent />
 			</DefaultKeyboardShortcutsDialog>
 		)

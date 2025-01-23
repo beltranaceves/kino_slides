@@ -2,7 +2,7 @@ import { createShapePropsMigrationIds, createShapePropsMigrationSequence } from 
 
 const versions = createShapePropsMigrationIds(
 	// this must match the shape type in the shape definition
-	'card',
+	'CellEmbed',
 	{
 		AddSomeProperty: 1,
 	}

@@ -12,86 +12,152 @@ import { cardShapeProps } from './card-shape-props'
 import type { ICardShape } from './card-shape-types'
 
 // There's a guide at the bottom of this file!
+	export class CardShapeUtil extends ShapeUtil<ICardShape> {
+		static override type = 'CellEmbed' as const
+		// [1]
+		static override props = cardShapeProps
+		// [2]
+		static override migrations = cardShapeMigrations
 
-export class CardShapeUtil extends ShapeUtil<ICardShape> {
-	static override type = 'card' as const
-	// [1]
-	static override props = cardShapeProps
-	// [2]
-	static override migrations = cardShapeMigrations
+		// [3]
+		override isAspectRatioLocked(_shape: ICardShape) {
+			return false
+		}
+		override canResize(_shape: ICardShape) {
+			return true
+		}
 
-	// [3]
-	override isAspectRatioLocked(_shape: ICardShape) {
-		return false
-	}
-	override canResize(_shape: ICardShape) {
-		return true
-	}
+		// [4]
+		getDefaultProps(): ICardShape['props'] {
+			return {
+				w: 300,
+				h: 300,
+				color: 'black',
+			}
+		}
 
-	// [4]
-	getDefaultProps(): ICardShape['props'] {
-		return {
-			w: 300,
-			h: 300,
-			color: 'black',
+		// [5]
+		getGeometry(shape: ICardShape) {
+			return new Rectangle2d({
+				width: shape.props.w,
+				height: shape.props.h,
+				isFilled: true,
+			})
+		}
+
+		// [6]
+		component(shape: ICardShape) {
+			const bounds = this.editor.getShapeGeometry(shape).bounds
+			const theme = getDefaultColorTheme({ isDarkMode: this.editor.user.getIsDarkMode() })
+
+			const [url, setUrl] = useState('')
+			const [isFormVisible, setIsFormVisible] = useState(true)
+
+			const handleSubmit = (e: React.FormEvent) => {
+				e.preventDefault()
+				setIsFormVisible(false)
+			}
+
+			return (
+				<HTMLContainer
+					id={shape.id}
+					style={{
+						border: '1px solid black',
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+						justifyContent: 'center',
+						pointerEvents: 'all',
+						backgroundColor: theme[shape.props.color].semi,
+						color: theme[shape.props.color].solid,
+						position: 'relative', // Added for absolute positioning of edit button
+					}}
+				>
+					{/* Edit Button */}
+					{!isFormVisible && (
+						<button
+							onClick={() => setIsFormVisible(true)}
+							style={{
+								position: 'absolute',
+								top: '-1.5px',
+								left: '-1.5px',
+								padding: '8px 16px',
+								backgroundColor: theme[shape.props.color].solid,
+								color: theme[shape.props.color].semi,
+								border: 'none',
+								cursor: 'pointer',
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+								fontSize: '14px',
+								fontWeight: 'bold',
+								boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+								borderRadius: '0 0 4px 0',
+							}}
+						>
+							Edit
+						</button>
+					)}
+
+					{isFormVisible ? (
+						<form 
+							onSubmit={handleSubmit}
+							style={{
+								display: 'flex',
+								flexDirection: 'column',
+								gap: '10px',
+								padding: '20px',
+								width: '100%'
+							}}
+						>
+							<input
+								type="url"
+								value={url}
+								onChange={(e) => setUrl(e.target.value)}
+								placeholder="Enter iframe URL"
+								required
+								style={{
+									padding: '8px',
+									borderRadius: '4px',
+									border: '1px solid currentColor'
+								}}
+							/>
+							<button 
+								type="submit"
+								style={{
+									padding: '8px',
+									borderRadius: '4px',
+									backgroundColor: theme[shape.props.color].solid,
+									color: theme[shape.props.color].semi,
+									border: 'none',
+									cursor: 'pointer'
+								}}
+							>
+								Load iframe
+							</button>
+						</form>
+					) : (
+						<iframe
+							src={url}
+							width="100%"
+							height="100%"
+							allowFullScreen
+						/>
+					)}
+				</HTMLContainer>
+			)
+		}
+		// [7]
+		indicator(shape: ICardShape) {
+			return <rect width={shape.props.w} height={shape.props.h} />
+		}
+
+		// [8]
+		override onResize(shape: ICardShape, info: TLResizeInfo<ICardShape>) {
+			return resizeBox(shape, info)
 		}
 	}
-
-	// [5]
-	getGeometry(shape: ICardShape) {
-		return new Rectangle2d({
-			width: shape.props.w,
-			height: shape.props.h,
-			isFilled: true,
-		})
-	}
-
-	// [6]
-	component(shape: ICardShape) {
-		const bounds = this.editor.getShapeGeometry(shape).bounds
-		const theme = getDefaultColorTheme({ isDarkMode: this.editor.user.getIsDarkMode() })
-
-		//[a]
-		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const [count, setCount] = useState(0)
-
-		return (
-			<HTMLContainer
-				id={shape.id}
-				style={{
-					border: '1px solid black',
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					justifyContent: 'center',
-					pointerEvents: 'all',
-					backgroundColor: theme[shape.props.color].semi,
-					color: theme[shape.props.color].solid,
-				}}
-			>
-				<h2>Clicks: {count}</h2>
-				<button
-					// [b]
-					onClick={() => setCount((count) => count + 1)}
-					onPointerDown={(e) => e.stopPropagation()}
-				>
-					{bounds.w.toFixed()}x{bounds.h.toFixed()}
-				</button>
-			</HTMLContainer>
-		)
-	}
-
-	// [7]
-	indicator(shape: ICardShape) {
-		return <rect width={shape.props.w} height={shape.props.h} />
-	}
-
-	// [8]
-	override onResize(shape: ICardShape, info: TLResizeInfo<ICardShape>) {
-		return resizeBox(shape, info)
-	}
-}
-/* 
+/*
 A utility class for the card shape. This is where you define the shape's behavior, 
 how it renders (its component and indicator), and how it handles different events.
 

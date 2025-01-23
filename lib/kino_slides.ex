@@ -4,7 +4,7 @@ defmodule KinoSlides do
   # Your assets_path should be the same as you define in assets/vite.config.js
   use Kino.JS, assets_path: "assets/build"
   use Kino.JS.Live
-  use Kino.SmartCell, name: "Kino Smart Cell Template"
+  use Kino.SmartCell, name: "Slides"
 
   @impl true
   def init(attrs \\ %{}, ctx) do

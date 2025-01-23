@@ -1,8 +1,8 @@
 import { BaseBoxShapeTool, TLClickEventInfo } from 'tldraw'
 export class CardShapeTool extends BaseBoxShapeTool {
-	static override id = 'card'
+	static override id = 'CellEmbed'
 	static override initial = 'idle'
-	override shapeType = 'card'
+	override shapeType = 'CellEmbed'
 
 	override onDoubleClick(_info: TLClickEventInfo) {
 		// you can handle events in handlers like this one;
