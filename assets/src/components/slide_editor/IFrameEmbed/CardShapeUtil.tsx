@@ -53,13 +53,6 @@ import { urlStyle } from './url-style'
 			const bounds = this.editor.getShapeGeometry(shape).bounds
 			const theme = getDefaultColorTheme({ isDarkMode: this.editor.user.getIsDarkMode() })
 
-			const [isFormVisible, setIsFormVisible] = useState(true)
-
-			const handleSubmit = (e: React.FormEvent) => {
-				e.preventDefault()
-				setIsFormVisible(false)
-			}
-
 			return (
 				<HTMLContainer
 					id={shape.id}
@@ -75,77 +68,12 @@ import { urlStyle } from './url-style'
 						position: 'relative', // Added for absolute positioning of edit button
 					}}
 				>
-					{/* Edit Button
-					{!isFormVisible && (
-						<button
-							onClick={() => setIsFormVisible(true)}
-							style={{
-								position: 'absolute',
-								top: '-1.5px',
-								left: '-1.5px',
-								padding: '8px 16px',
-								backgroundColor: theme[shape.props.color].solid,
-								color: theme[shape.props.color].semi,
-								border: 'none',
-								cursor: 'pointer',
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'center',
-								fontSize: '14px',
-								fontWeight: 'bold',
-								boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-								borderRadius: '0 0 4px 0',
-							}}
-						>
-							Edit
-						</button>
-					)}
-
-					{isFormVisible ? (
-						<form 
-							onSubmit={handleSubmit}
-							style={{
-								display: 'flex',
-								flexDirection: 'column',
-								gap: '10px',
-								padding: '20px',
-								width: '100%'
-							}}
-						>
-							<input
-								type="url"
-								value={url}
-								onChange={(e) => setUrl(e.target.value)}
-								placeholder="Enter notebook or Smart Cell URL"
-								required
-								style={{
-									padding: '8px',
-									borderRadius: '4px',
-									border: '1px solid currentColor'
-								}}
-							/>
-							<button 
-								type="submit"
-								style={{
-									padding: '8px',
-									borderRadius: '4px',
-									backgroundColor: theme[shape.props.color].solid,
-									color: theme[shape.props.color].semi,
-									border: 'none',
-									cursor: 'pointer'
-								}}
-							>
-								Load iframe
-							</button>
-						</form>
-					) : ( */}
 						<iframe
 							src={shape.props.url}
 							width="100%"
 							height="100%"
 							allowFullScreen
 						/>
-					{/* )} */}
 				</HTMLContainer>
 			)
 		}
