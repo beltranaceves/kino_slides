@@ -22,6 +22,7 @@ import { embedDefinitions } from './EmbedConfig';
 import { useState } from 'react'
 import { CardShapeUtil } from './IFrameEmbed/CardShapeUtil'
 import { CardShapeTool } from './IFrameEmbed/CardShapeTool'
+import { CustomStylePanel } from './IFrameEmbed/CustomStylePanel'
 
 
 const components: TLComponents = {
@@ -49,6 +50,7 @@ const components: TLComponents = {
 			</DefaultKeyboardShortcutsDialog>
 		)
 	},
+	StylePanel: CustomStylePanel
 }
 
 const overrides: TLUiOverrides = {

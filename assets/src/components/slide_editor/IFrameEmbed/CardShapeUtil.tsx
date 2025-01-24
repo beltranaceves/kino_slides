@@ -6,10 +6,12 @@ import {
 	TLResizeInfo,
 	getDefaultColorTheme,
 	resizeBox,
+	StyleProp
 } from 'tldraw'
 import { cardShapeMigrations } from './card-shape-migrations'
 import { cardShapeProps } from './card-shape-props'
 import type { ICardShape } from './card-shape-types'
+import { urlStyle } from './url-style'
 
 // There's a guide at the bottom of this file!
 	export class CardShapeUtil extends ShapeUtil<ICardShape> {
@@ -33,6 +35,7 @@ import type { ICardShape } from './card-shape-types'
 				w: 300,
 				h: 300,
 				color: 'black',
+				url: urlStyle,
 			}
 		}
 
@@ -114,7 +117,7 @@ import type { ICardShape } from './card-shape-types'
 								type="url"
 								value={url}
 								onChange={(e) => setUrl(e.target.value)}
-								placeholder="Enter iframe URL"
+								placeholder="Enter notebook or Smart Cell URL"
 								required
 								style={{
 									padding: '8px',
