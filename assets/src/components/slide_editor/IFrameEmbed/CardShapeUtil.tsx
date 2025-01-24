@@ -53,7 +53,6 @@ import { urlStyle } from './url-style'
 			const bounds = this.editor.getShapeGeometry(shape).bounds
 			const theme = getDefaultColorTheme({ isDarkMode: this.editor.user.getIsDarkMode() })
 
-			const [url, setUrl] = useState('')
 			const [isFormVisible, setIsFormVisible] = useState(true)
 
 			const handleSubmit = (e: React.FormEvent) => {
@@ -76,7 +75,7 @@ import { urlStyle } from './url-style'
 						position: 'relative', // Added for absolute positioning of edit button
 					}}
 				>
-					{/* Edit Button */}
+					{/* Edit Button
 					{!isFormVisible && (
 						<button
 							onClick={() => setIsFormVisible(true)}
@@ -139,14 +138,14 @@ import { urlStyle } from './url-style'
 								Load iframe
 							</button>
 						</form>
-					) : (
+					) : ( */}
 						<iframe
-							src={url}
+							src={shape.props.url}
 							width="100%"
 							height="100%"
 							allowFullScreen
 						/>
-					)}
+					{/* )} */}
 				</HTMLContainer>
 			)
 		}
