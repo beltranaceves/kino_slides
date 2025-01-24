@@ -32,3 +32,5 @@ assets/node_modules/
 .elixir_ls/
 Nueva
 Nueva Excel.bat
+
+assets/build/
