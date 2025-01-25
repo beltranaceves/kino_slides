@@ -53,6 +53,22 @@ import { urlStyle } from './url-style'
 			const bounds = this.editor.getShapeGeometry(shape).bounds
 			const theme = getDefaultColorTheme({ isDarkMode: this.editor.user.getIsDarkMode() })
 
+			const handleIframeLoad = (event: Event) => {
+				const iframe = event.target;
+				console.log("YEAH WE IN")
+				console.log(event)
+				console.log(iframe)
+				// Your JavaScript injection here
+				// iframe.contentWindow.postMessage({
+				// 	type: "init",
+				// 	data: {
+				// 		// The init data will be passed to the iframe's init function
+				// 		// This is where we can pass our initial configuration
+				// 		targetElement: '#cell-ygc245c266dbnvs4',
+				// 		hideSelector: '.sidebar'
+				// 	}
+				// }, "*");
+			};
 			return (
 				<HTMLContainer
 					id={shape.id}
@@ -73,6 +89,7 @@ import { urlStyle } from './url-style'
 							width="100%"
 							height="100%"
 							allowFullScreen
+							onLoad={handleIframeLoad}
 						/>
 				</HTMLContainer>
 			)
